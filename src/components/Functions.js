@@ -8,7 +8,7 @@ function Functions(props) {
     { chars: [1, 2, 3, 4, 5], colors: [0, 0, 0, 0, 0] },
     { chars: [6, 7, 8, 9, 10], colors: [0, 0, 0, 0, 0] },
     { chars: [11, 12, 13, 14, 15], colors: [0, 0, 0, 0, 0] },
-  ]);
+  ]); // move all this into App.js and just pass in data as prop, way easier, less clean doe.
 
   const newFunctions = functions;
   newFunctions[props.functionIdx].chars = [
