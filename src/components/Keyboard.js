@@ -22,9 +22,9 @@ const chars = [
   "ENTER",
 ];
 
-function Keyboard() {
+function Keyboard(props) {
   const getCharPress = (char) => {
-    console.log(`KEY PRESS: ${char}`);
+    props.getCharPress(char);
   };
 
   return (
