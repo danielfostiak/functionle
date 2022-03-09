@@ -1,13 +1,11 @@
 import React from "react";
-import Function from "./components/Function";
 import Functions from "./components/Functions";
-import Input from "./components/Input";
 import Keyboard from "./components/Keyboard";
 import { useState } from "react";
 
 const latestSpace = (arr) => {
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] == " ") return i;
+    if (arr[i] === " ") return i;
   }
   return -1;
 };
