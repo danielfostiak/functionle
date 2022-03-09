@@ -20,6 +20,7 @@ const chars = [
   "+",
   "=",
   "ENTER",
+  "BACK",
 ];
 
 function Keyboard(props) {

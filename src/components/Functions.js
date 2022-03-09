@@ -1,31 +1,18 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Function from "./Function";
 
 function Functions(props) {
   // const [functionIdx, setFunctionIdx] = useState(0);
-  const [functions, setFunctions] = useState([
-    { chars: [1, 2, 3, 4, 5], colors: [0, 0, 0, 0, 0] },
-    { chars: [6, 7, 8, 9, 10], colors: [0, 0, 0, 0, 0] },
-    { chars: [11, 12, 13, 14, 15], colors: [0, 0, 0, 0, 0] },
-  ]); // move all this into App.js and just pass in data as prop, way easier, less clean doe.
+  // move all this into App.js and just pass in data as prop, way easier, less clean doe.
 
-  const newFunctions = functions;
-  newFunctions[props.functionIdx].chars = [
-    props.latestChar,
-    props.latestChar,
-    props.latestChar,
-    props.latestChar,
-    props.latestChar,
-  ];
-  setFunctions(newFunctions);
+  useEffect(() => {
+    console.log("rerender");
+  }, [props.functions]);
 
   return (
     <div>
-      {functions.map((func, i) => {
-        if (i == props.functionIdx) {
-          console.log(func);
-        }
+      {props.functions.map((func, i) => {
         return <Function func={func} key={i} />;
       })}
     </div>
