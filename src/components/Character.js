@@ -4,8 +4,8 @@ import "./Character.css";
 
 function Character(props) {
   return (
-    <div className="charBox">
-      <pre>{props.char}</pre>
+    <div className="charRow">
+      <pre className="charBox">{props.char}</pre>
     </div>
   );
 }

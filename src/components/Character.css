@@ -1,4 +1,9 @@
 .charBox {
-  /* width: 15px;
-  height: 15px; */
+  width: 15px;
+  height: 15px;
+  background-color: gray;
+}
+
+.charRow {
+  display: inline-block;
 }
