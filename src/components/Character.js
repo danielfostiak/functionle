@@ -12,11 +12,12 @@ function Character(props) {
           props.color === 0
             ? "default"
             : props.color === 1
-            ? "secondary"
+            ? "error"
             : props.color === 2
             ? "warning"
             : "success"
         }
+        // variant={props.color === 0 ? "outlined" : "filled"}
         label={<pre>{props.char}</pre>}
       />
     </div>
