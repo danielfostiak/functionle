@@ -1,8 +1,21 @@
 import React from "react";
 import Functions from "./components/Functions";
 import Keyboard from "./components/Keyboard";
-import { useState } from "react";
-import { Chip } from "@mui/material";
+import { useState, useEffect } from "react";
+import Graph from "./components/Graph";
+
+/* useHelperExpression() can only be used inside <GraphingCalculator/>,
+which is why this couldn't go in <Demo/> */
+// function Point() {
+//   const a = useHelperExpression({ latex: "a" });
+
+//   let label;
+//   if (a > 0) label = "positive x-axis";
+//   else if (a < 0) label = "negative x-axis";
+//   else label = "origin";
+
+//   return <Expression id="point" latex="(a,0)" label={label} showLabel />;
+// }
 
 const latestSpace = (arr) => {
   for (let i = 0; i < arr.length; i++) {
@@ -59,11 +72,12 @@ const getColors = (arr, correctArr) => {
 };
 
 const func = ["x", "^", "2", "-", "x"];
-
+const funcString = func.join("");
 // fresh REAL
 // swees GUESS
 
 function App() {
+  const [won, setWon] = useState(false);
   const [functionIdx, setFunctionIdx] = useState(0);
   // COLORS 0=blank, 1=grey, 2=yellow, 3=green
   const [functions, setFunctions] = useState([
@@ -89,6 +103,12 @@ function App() {
     if (char === "ENTER") {
       if (latestSpaceIdx === -1) {
         const newColors = getColors(functions[functionIdx].chars, func);
+        console.log(newColors);
+        if (JSON.stringify(newColors) === JSON.stringify([3, 3, 3, 3, 3])) {
+          console.log("win");
+          setWon(true);
+        }
+
         newFunctions[functionIdx].colors = newColors;
         setFunctions(newFunctions);
         setFunctionIdx(functionIdx + 1);
@@ -102,11 +122,14 @@ function App() {
   };
 
   return (
-    <div>
-      Functionle
-      <Functions functions={functions} />
-      <Keyboard getCharPress={getCharPress} />
-    </div>
+    <>
+      <h2>functionle</h2>
+      <Graph func={`y = ${funcString}`} />
+      <div>
+        <Functions functions={functions} />
+        {!won ? <Keyboard getCharPress={getCharPress} /> : <p>WINNER</p>}
+      </div>
+    </>
   );
 }
 
