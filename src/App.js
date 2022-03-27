@@ -3,19 +3,17 @@ import Functions from "./components/Functions";
 import Keyboard from "./components/Keyboard";
 import { useState, useEffect } from "react";
 import Graph from "./components/Graph";
+import "./dateToFunction.json";
 
-/* useHelperExpression() can only be used inside <GraphingCalculator/>,
-which is why this couldn't go in <Demo/> */
-// function Point() {
-//   const a = useHelperExpression({ latex: "a" });
+const dateJSON = require("./dateToFunction.json");
 
-//   let label;
-//   if (a > 0) label = "positive x-axis";
-//   else if (a < 0) label = "negative x-axis";
-//   else label = "origin";
+const today = new Date();
 
-//   return <Expression id="point" latex="(a,0)" label={label} showLabel />;
-// }
+const date = `${today.getUTCDate()}/${today.getUTCMonth() + 1}`;
+
+const funcString = dateJSON[date];
+
+const func = funcString.split("");
 
 const latestSpace = (arr) => {
   for (let i = 0; i < arr.length; i++) {
@@ -46,8 +44,6 @@ const getColors = (arr, correctArr) => {
       dummyCorrectArr[i] = "GREEN";
     }
   }
-  // dummyArr = dummyArr.filter((el) => el !== "REMOVE GREEN");
-  // dummyCorrectArr = dummyCorrectArr.filter((el) => el !== "REMOVE GREEN");
 
   // Get oranges
   for (let i = 0; i < arr.length; i++) {
@@ -70,11 +66,6 @@ const getColors = (arr, correctArr) => {
 
   return results;
 };
-
-const func = ["x", "^", "2", "-", "x"];
-const funcString = func.join("");
-// fresh REAL
-// swees GUESS
 
 function App() {
   const [won, setWon] = useState(false);
