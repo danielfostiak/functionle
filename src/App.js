@@ -1,7 +1,7 @@
 import React from "react";
 import Functions from "./components/Functions";
 import Keyboard from "./components/Keyboard";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Graph from "./components/Graph";
 import "./dateToFunction.json";
 
@@ -14,6 +14,33 @@ const date = `${today.getUTCDate()}/${today.getUTCMonth() + 1}`;
 const funcString = dateJSON[date];
 
 const func = funcString.split("");
+
+const defaultFunctions = [];
+
+for (let i = 1; i <= 3; i++) {
+  defaultFunctions.push({
+    chars: Array(func.length).fill(" "),
+    colors: Array(func.length).fill(0),
+  });
+}
+
+if (!localStorage.getItem("today"))
+  localStorage.setItem(
+    "today",
+    `["${date}",${JSON.stringify(defaultFunctions)},0]`
+  );
+
+const localLastSession = localStorage.getItem("today");
+
+const lastSession = JSON.parse(localLastSession);
+
+const [lastDate] = lastSession;
+
+if (lastDate !== date)
+  localStorage.setItem(
+    "today",
+    `["${date}",${JSON.stringify(defaultFunctions)},0]`
+  );
 
 const latestSpace = (arr) => {
   for (let i = 0; i < arr.length; i++) {
@@ -69,13 +96,19 @@ const getColors = (arr, correctArr) => {
 
 function App() {
   const [won, setWon] = useState(false);
-  const [functionIdx, setFunctionIdx] = useState(0);
+  // const [functionIdx, setFunctionIdx] = useState(0);
   // COLORS 0=blank, 1=grey, 2=yellow, 3=green
-  const [functions, setFunctions] = useState([
-    { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
-    { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
-    { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
-  ]);
+  // const [functions, setFunctions] = useState([
+  //   { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
+  //   { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
+  //   { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
+  // ]);
+  const [functionIdx, setFunctionIdx] = useState(
+    JSON.parse(localStorage.getItem("today"))[2]
+  );
+  const [functions, setFunctions] = useState(
+    JSON.parse(localStorage.getItem("today"))[1]
+  );
 
   console.log(functions);
 
@@ -95,14 +128,31 @@ function App() {
       if (latestSpaceIdx === -1) {
         const newColors = getColors(functions[functionIdx].chars, func);
         console.log(newColors);
-        if (JSON.stringify(newColors) === JSON.stringify([3, 3, 3, 3, 3])) {
+        if (
+          JSON.stringify(newColors) ===
+          JSON.stringify(Array(func.length).fill(3))
+        ) {
           console.log("win");
           setWon(true);
         }
 
         newFunctions[functionIdx].colors = newColors;
+
+        const newFunctionIdx = functionIdx + 1;
+
         setFunctions(newFunctions);
-        setFunctionIdx(functionIdx + 1);
+        localStorage.setItem(
+          "today",
+          `["${date}",${JSON.stringify(newFunctions)},${JSON.stringify(
+            newFunctionIdx
+          )}]`
+        );
+
+        setFunctionIdx(newFunctionIdx);
+        localStorage.setItem(
+          "today",
+          `["${date}", ${JSON.stringify(newFunctions)},${newFunctionIdx}]`
+        );
       }
       return;
     }

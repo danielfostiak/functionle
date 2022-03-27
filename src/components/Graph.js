@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Expression,
-  GraphingCalculator,
-  useHelperExpression,
-} from "desmos-react";
+import { Expression, GraphingCalculator } from "desmos-react";
 
 function Graph(props) {
   return (
