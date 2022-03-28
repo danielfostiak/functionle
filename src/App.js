@@ -102,7 +102,7 @@ function App() {
   //   { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
   //   { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
   //   { chars: [" ", " ", " ", " ", " "], colors: [0, 0, 0, 0, 0] },
-  // ]);
+  // ]); cheeky comment for the gh
   const [functionIdx, setFunctionIdx] = useState(
     JSON.parse(localStorage.getItem("today"))[2]
   );
